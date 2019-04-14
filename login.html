@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="./css/reset.css">
+	<link rel="stylesheet" href="./css/login.css">
+	<title>login</title>
+
+</head>
+<body>
+<!-- 页面主体部分 -->
+<div class="container">
+	<div class="background">
+		<form action="" id="login_form" onsubmit="return false;">
+			<div class="login_box">
+				<p>
+					<img src="./images/980.png" alt="">
+					<span>京沈铁路边坡安全监测</span>
+				</p>
+				<div class="f1">
+					<label for="user" class="label1">用户</label>
+					<input id="user" type="text" class="name username">
+					<div class="prompt user"></div>
+				</div>
+				<div class="f2">
+					<label for="psd" class="label2">密码</label>
+					<input class="password" id="psd" type="password">
+					<div class="prompt pass"></div>
+				</div>
+
+				<button class="denglu" type="submit">登&nbsp;&nbsp;录</button>
+			</div>
+
+		</form>
+
+	</div>
+</div>
+<script src="./js/jquery.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script>
+	$(function () {
+		$("#login_form").submit(function(){
+			var data={}
+			data.username = $(".username").val();
+			data.password = $(".password").val();
+
+			// console.log(JSON.stringify(data));
+			// console.log(respType(data,W_config.getData.respType));
+
+			$(".user,.pass").html("");
+
+			if(!data.username){
+				$(".user").html("请输入手机/邮箱/用户名");
+				return;
+			}else if(!data.password){
+				$(".pass").html("请输入密码");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+
+				async: false,
+				cache:true,
+				url: 'http://36.110.66.218:8091/zzcismp/user/login.shtml',
+				data:{username:data.username,password:data.password},
+				dataType: 'json',
+				jsonp: "callback",
+				success: function(json){
+					// console.log(json);
+					// return;
+					// 1通过
+					// 3帐号密码错误
+					if(json.status == 1){
+						var date = new Date();
+						date.setTime(date.getTime()+1800*1000);
+						// alert("登录成功");
+						$.cookie('username', data.username, { expires: 7, path: '/' });
+						$.cookie('password', data.password, { expires: 7, path: '/' });
+						/*$.cookie('login_auto', $(".login_auto:checked").val(),
+						 { expires: date.setTime(date.getTime()+(360*24*3600*1000)), path: '/' });*/
+
+						location.href="index.html";
+					}else{
+						// alert("帐号或密码错误");
+						$(".user").html("帐号或密码错误");
+					}
+				},
+				error: function(){
+					 alert('fail');
+				}
+			});
+
+		});
+	})
+</script>
+
+</body>
+</html>

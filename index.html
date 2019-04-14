@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="./css/reset.css">
+	<link rel="stylesheet" href="./css/index.css">
+	<link rel="stylesheet" href="./css/bootstrap.css"/>
+
+	<link href="css/mobiscroll.css" rel="stylesheet" />
+	<link href="css/mobiscroll_date.css" rel="stylesheet" />
+	<title>title</title>
+</head>
+<body>
+	<div class="body">
+		<div class="header">
+			<img class="jiantou" src="./images/jiantou.png" alt="">
+			<img src="./images/980.png" alt="">
+			<span>京沈铁路边坡安全监测</span>
+		</div>
+		<div class="container">
+			<div class="index_header1">
+				<p>设备布点图</p>
+				<div class="p1">
+					<img src="./images/cheng.png" alt="" class="img-responsive center-block">
+				</div>
+			</div>
+			<div class="chart_1 index" id="chart_1">
+				<p>位移实时数据</p>
+				<div id="main_1"></div>
+			</div>
+			<div class="chart_2 index" id="chart_1_1">
+				<p>土壤含水率实时数据</p>
+				<div id="main_2"></div>
+			</div>
+			<div class="history" id="history">
+				<div class="history_header">
+					<p class="jk">选择设备</p>
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							T1
+							<span class="caret"></span>
+						</button>
+						<ul id="select1" class="dropdown-menu che" aria-labelledby="dropdownMenu1">
+							<li><a href="javascript:;">T1</a></li>
+							<li><a href="javascript:;">T2</a></li>
+							<li><a href="javascript:;">T3</a></li>
+							<li><a href="javascript:;">T4</a></li>
+							<li><a href="javascript:;">T5</a></li>
+							<li><a href="javascript:;">T6</a></li>
+							<li><a href="javascript:;">T7</a></li>
+							<li><a href="javascript:;">T8</a></li>
+							<li><a href="javascript:;">T9</a></li>
+							<li><a href="javascript:;">L1</a></li>
+							<li><a href="javascript:;">L2</a></li>
+							<li><a href="javascript:;">L3</a></li>
+							<li><a href="javascript:;">L4</a></li>
+						</ul>
+					</div>
+					<div class="time_div">
+						<div class="start_">
+							<!--<p>请选择日期</p>-->
+							<!--<div class="start_time"></div>--><!--id="end_time"-->
+							<input type="text" class="sang_Calender1"
+										 name="USER_AGE" id="end_time" readonly class="input" placeholder="请选择日期"/>
+							<div class="button_01"></div>
+						</div>
+						<!--<div class="end_">
+							<p>到</p>
+							&lt;!&ndash;<div class="end_time"></div>&ndash;&gt;
+							<input type="text" class="sang_Calender" id="end_time" placeholder="" />
+						</div>-->
+
+					</div>
+				</div>
+				<div>
+						<table class="table table-striped weilan_table">
+							<thead>
+							<tr>
+								<th>编号</th>
+								<th>真实值</th>
+								<th class="start_n2">时间</th>
+							</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>3</td>
+									<td>48.9</td>
+									<td class="goal_n2">2019-3-14 20</td>
+								</tr>
+								<tr>
+									<td>4 </td>
+									<td>23.4</td>
+									<td class="goal_n2">2019-3-14 20</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>48.9</td>
+									<td class="goal_n2">2019-3-14 20</td>
+								</tr>
+								<tr>
+									<td>4 </td>
+									<td>23.4</td>
+									<td class="goal_n2">2019-3-14 20</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>48.9</td>
+									<td class="goal_n2">2019-3-14 20</td>
+								</tr>
+								<tr>
+									<td>4 </td>
+									<td>23.4</td>
+									<td class="goal_n2">2019-3-14 20</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>48.9</td>
+									<td class="goal_n2">2019-3-14 20</td>
+								</tr>
+								<tr>
+									<td>4 </td>
+									<td>23.4</td>
+									<td class="goal_n2">2019-3-14 20</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+			</div>
+			<!--<input type="text" name="USER_AGE" id="USER_AGE" readonly
+						 class="input" placeholder="请填写你的出生日期" />-->
+		</div>
+	</div>
+
+	<script src="./js/browser.js"></script> <!--不同浏览器兼容es6-->
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/mobiscroll_date.js" charset="gb2312"></script>
+	<script src="./js/mobiscroll.js"></script>
+	<script src="./js/jquery.cookie.js"></script>
+	<script src="./js/echarts.js"></script>
+	<script src="./js/monitor.js"></script>
+	<script src="./js/base.js"></script>
+	<script type="text/javascript" src="./js/datetime.js"></script>
+	<script src="./js/bootstrap.js"></script>
+	<script type="text/babel" src="./js/index.js"></script>
+
+	<script type="text/javascript">
+		$(function () {
+			var currYear = (new Date()).getFullYear();
+			var opt={};
+			opt.date = {preset : 'date'};
+			opt.datetime = {preset : 'datetime'};
+			opt.time = {preset : 'time'};
+			opt.default = {
+				theme: 'android-ics light', //皮肤样式
+				display: 'modal', //显示方式
+				mode: 'scroller', //日期选择模式
+				dateFormat: 'yyyy-mm-dd',
+				lang: 'zh',
+				showNow: true,
+				nowText: "今天",
+				startYear: currYear - 50, //开始年份
+				endYear: currYear + 10 //结束年份
+			};
+
+			$("#end_time").mobiscroll($.extend(opt['date'], opt['default']));
+
+		});
+	</script>
+
+</body>
+</html>
