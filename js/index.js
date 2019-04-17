@@ -1,4 +1,41 @@
 
+//获取url参数
+(function ($) {
+    $.getUrlParam = function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+})(jQuery);
+var projectCode = $.getUrlParam('project');
+var url
+
+//京沈--'1308F0001&'   京张--'1101F001'
+var buildcode
+if(projectCode == 1){
+    $('.header span').text('京张铁路边坡安全监测')
+    //url = 'http://36.110.66.214:50001'
+    url = 'http://192.168.20.16:8380'
+    buildcode = '1101F001'
+}else if(projectCode == 2){
+    $('.header span').text('京沈铁路边坡安全监测')
+    url = 'http://36.110.66.218:8091'
+    buildcode = '1308F0001'
+}else if(projectCode == 3){
+    $('.header span').text('冬奥会边坡安全监测')
+
+}
+
+//返回上一页
+$('.jiantou').on('click',function () {
+    location.href="loginBefore.html";
+})
+//判断登录
+if($.cookie('password') == null){
+    popupAlert('请登录...')
+    location.href="loginBefore.html";
+}
+
 //时间戳获取时间
 function getDate(datetime, year, month, date, hour, minute, second) {
 	datetime = datetime.replace(/-/g, '/');
@@ -111,8 +148,12 @@ shiftChart.setOption({
 	},
 	xAxis: {
 		type: 'category',
-		data: []
-	},
+		data: [],
+        /*axisLabel: {
+            interval:0,
+            rotate:40
+        }*/
+    },
 	yAxis: {
 		type: 'value',
 		name: '位移(mm)',
@@ -129,7 +170,7 @@ shiftChart.setOption({
 	},
 	series: [
 		{
-			name: '位移',
+			/*name: '位移',*/
 			type: 'line',
 			yAxisIndex: 0,
 			symbol: 'circle',
@@ -217,18 +258,18 @@ waterChart.setOption({
 			name: '含水率',
 			type: 'line',
 			yAxisIndex: 0,
-			symbol: 'circle',
-			symbolSize: 9,
+			//symbol: 'circle',
+			symbolSize: 4,
 			//拐点标志样式
 			itemStyle: {
 				normal: {
 					color: '#FF5100',
-					lineStyle: {color: '#FF5100', width: '3'},
-					areaStyle: {type: 'default'}
+					lineStyle: {color: '#FF5100', width: '2'},
+					//areaStyle: {type: 'default'}
 				}
 			},
 			//渐变橙白
-			areaStyle: {
+			/*areaStyle: {
 				normal: {
 					color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
 						offset: 0,
@@ -238,13 +279,11 @@ waterChart.setOption({
 						color: 'rgba(255,255,255,0.2)'
 					}])
 				}
-			},
+			},*/
 
 		}]
 });
-if($.cookie('password') == null){
-	//location.href="login.html";
-}
+
 //登录
 /*$.ajax({
  type: "post",
@@ -264,11 +303,18 @@ if($.cookie('password') == null){
  alert("请求数据失败!");
  }
  });*/
+
 $.ajax({
 	type: "post",
 	async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-	url: "http://36.110.66.218:8091/zzcismp/tsd/getBuildDevsData.shtml?buildcode=1308F0001&starttime=" + startTime + "&endtime=" + endtime + "&timetype=hour",    //请求发送到TestServlet处
-	data: {},
+	//url: url + "/zzcismp/tsd/getBuildDevsData.shtml?starttime=" + startTime + "&endtime=" + endtime + "&timetype=hour",    //请求发送到TestServlet处
+    url: url + "/zzcismp/tsd/getBuildDevsData.shtml",
+    data: {
+	    'timetype':'hour',
+	    'starttime':startTime,
+        'endtime':endtime,
+        'buildcode':buildcode
+    },
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
 		//请求成功时执行该函数内容，result即为服务器返回的json对象
@@ -326,20 +372,21 @@ $.ajax({
 	},
 	error: function (errorMsg) {
 		//请求失败时执行该函数
-		alert("图表请求数据失败!");
+        popupAlert('请登录...')
 	}
 });
+
 //位移设备阈值
 $.ajax({
 	type: "post",
 	async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-	url: "http://36.110.66.218:8091/zzcismp/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
+	url: url + "/zzcismp/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
 	data: {devcode:'1308F00010010O09'},
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
 		//请求成功时执行该函数内容，result即为服务器返回的json对象
 		if (result) {
-			L_para_a = result.para_a
+			L_para_a = result.para_b
 			shiftChart.setOption({
 				series:{
 					markLine:{
@@ -358,18 +405,18 @@ $.ajax({
 	},
 	error: function (errorMsg) {
 		//请求失败时执行该函数
-		alert("请求数据失败!");
+        popupAlert('请登录...')
 	}
 });
 //含水率设备阈值
 $.ajax({
 	type: "post",
 	async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-	url: "http://36.110.66.218:8091/zzcismp/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
+	url: url + "/zzcismp/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
 	data: {devcode:'1308F00010010K01'},
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
-		T_para_a = result.para_a
+		T_para_a = result.para_b
 		if (result) {
 			waterChart.setOption({
 				series:{
@@ -389,7 +436,7 @@ $.ajax({
 	},
 	error: function (errorMsg) {
 		//请求失败时执行该函数
-		alert("请求数据失败!");
+        popupAlert('请登录...')
 	}
 });
 //最下边表格
@@ -447,8 +494,21 @@ function getDevcode(n) {
 	}
 	return val
 }
+//弹窗提示
+function popupAlert(x) {
+    $('.tip').text(x)
+    $('.zhe').show()
+    setTimeout(function () {
+        $('.zhe').hide()
+    },2000)
+}
 
 $('.button_01').on('click',function () {
+	if(!$('#end_time').val()){
+        popupAlert('请选择日期...')
+		return
+	}
+
 	var type_text = $('#dropdownMenu1').text().trim()
 	var devcode = getDevcode(type_text)
 	var start_time = $('#end_time').val() + ' 00:00:00'
@@ -464,7 +524,7 @@ $('.button_01').on('click',function () {
 		type: "post",
 		async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
 		//url: "http://36.110.66.218:8091/zzcismp/tsd/getDevData.shtml?devcode=1308F00010010O10&starttime=2018-09-01%2000:00:00&endtime=2018-10-01%2000:00:00&timetype=hour",
-		url:'http://36.110.66.218:8091/zzcismp/tsd/getDevData.shtml',
+		url: url + '/zzcismp/tsd/getDevData.shtml',
 		data: {
 			//devcode:'1308F00010010O10',
 			devcode:devcode,
@@ -475,7 +535,7 @@ $('.button_01').on('click',function () {
 		dataType: "json",
 		success: function (result) {
 			$('.weilan_table tbody').html('')
-			console.log(result)
+			//console.log(result)
 			if (result) {
 				for(var i=0;i<result.data.length;i++){
 					$('.weilan_table tbody').append(`<tr>
@@ -487,12 +547,14 @@ $('.button_01').on('click',function () {
 
 				var h_height = $('.weilan_table').height() + 100 + 'px'
 				$('#history').css('height', h_height)
+			}else {
+                popupAlert('该时间没有数据...')
 			}
 
 		},
 		error: function (errorMsg) {
 			//请求失败时执行该函数
-			alert("请求数据失败!");
+            popupAlert('网络错误...')
 		}
 	});
 

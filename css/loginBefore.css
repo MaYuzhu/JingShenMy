@@ -1,0 +1,83 @@
+
+html,body{
+    height: 100%;
+    font-family: '微软雅黑';
+}
+.bg_big{
+    width: 100%;
+    height: 100%;
+    background: url("../images/bg_shou.jpg") no-repeat center;
+    background-size: auto 100%;
+    overflow: hidden;
+    position: relative;
+}
+.mark_big{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: linear-gradient(to top, rgba(200, 200, 200, 0), rgba(250, 250, 250, 1));
+}
+.top{
+    width: 64%;
+    margin: 46% auto 0;
+    position: relative;
+    z-index: 20;
+}
+@media screen and (min-width:900px){
+    .top{
+        width: 270px;
+        margin: 260px auto 0;
+    }
+    .bg_big{
+        background-size: 100% 100%;
+    }
+}
+
+.top>:nth-child(1){
+    font-size: 17px;
+    text-align: justify;
+    font-weight: bold;
+}
+.top>:nth-child(1):after {
+    content: '';
+    width: 100%;
+    display: inline-block;
+}
+.top>:nth-child(2){
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+.top>:nth-child(3){
+    font-size: 16px;
+}
+.top>:nth-child(3) li{
+    border: 1px solid #666;
+    text-align: center;
+    border-radius: 22px;
+    padding: 12px 0;
+    margin: 12px 0;
+    cursor: pointer;
+}
+.top>:nth-child(3) li:hover{
+    border: 1px solid #43aea8;
+    background: #43aea8;
+    color: #fff;
+}
+.top>:nth-child(3) .li{
+    border: 1px solid #43aea8;
+    background: #43aea8;
+    color: #fff;
+}
+.bottom{
+    width: 120px;
+    height: 36px;
+    position: absolute;
+    z-index: 20;
+    left: 50%;
+    transform: translate(-50%,0);
+    bottom: 50px;
+    background: url("../images/logo_text.png");
+    background-size: 210% 230%;
+    display: flex;
+}

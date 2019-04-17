@@ -7,6 +7,11 @@ html,body{
   /*height: 100%;*/
   position: relative;
 }
+.top_bg{
+  width: 100%;
+  height: 1px;
+  background: #e6eaed;
+}
 .header{
   width: 100%;
   height: 50px;
@@ -34,11 +39,17 @@ html,body{
   margin-right: -1px;
 }
 
-.container{
+.container1{
   /*height: 100%;*/
   background: #e6eaed;
   margin-top: 50px;
   padding-bottom: 30px;
+}
+.index_header1{
+  width: 94%;
+  margin: 10px auto;
+  padding: 0 5px 5px;
+  background: white;
 }
 .index_header1 p,.index p{
   height: 30px;
@@ -46,7 +57,8 @@ html,body{
   font-size: 16px;
   line-height: 30px;
   font-family: 微软雅黑;
-  padding: 4px 10px;
+  padding: 1px 10px;
+  margin: 0;
 }
 .index_header1 img{
   width: 100%;
@@ -62,22 +74,36 @@ html,body{
   /*style="width: 320px;height:280px;"*/
 }
 .chart_1 div>:nth-child(2){
-  width: 35%;
+  width: 37%;
   height: 30%;
   margin-right: 2%;
 }
 .chart_2 div>:nth-child(2){
-  width: 35%;
-  height: 69%;
+  width: 37%;
+  height: 72%;
   margin-right: 2%;
   display: none;
 }
+@media screen and (min-width:900px){
+  .chart_1 div>:nth-child(2){
+    width: 140px;
+    height: 30%;
+    margin-right: 2%;
+  }
+  .chart_2 div>:nth-child(2){
+    width: 140px;
+    height: 72%;
+    margin-right: 2%;
+    display: none;
+  }
+}
+
 
 .history{
   width: 94%;
   background: #fff;
   margin:0 auto;
-  padding-bottom: 20px;
+  padding: 10px 0 20px 0;
 }
 .history_header{
   height: 46px;
@@ -123,9 +149,11 @@ html,body{
 }
 .time_div input{
   border: 0px solid;
-  width: 140px;
   height: 30px;
   padding-left: 5px;
+  width:-webkit-calc(97% - 42px);
+  width:-moz-calc(97% - 42px);
+  width:calc(97% - 42px);
 }
 .button_01{
   background: #43aea8 url(../images/icon.png) no-repeat -32px -581px;
@@ -144,6 +172,7 @@ html,body{
   height: 37px;
 }
 .history table th{
+  text-align: center;
   font-size: 14px;
   font-weight: bold;
   border-bottom: 2px solid #ddd;
@@ -154,4 +183,35 @@ html,body{
 }
 .history table tbody>tr:nth-child(odd){
   background: #f9f9f9;
+}
+.zhe{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top:0;
+  background: rgba(148, 148, 148, 0.5);
+  z-index: 9999;
+  display: none;
+}
+.tip{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: rgba(29, 29, 29, 0.8);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 3px;
+}
+
+#select1 {
+  min-width: 240px;
+  left: -50px;
+}
+#select1 li{
+  float: left;
+  width: 26px;
+}
+#select1 li a{
+  padding: 3px 5px;
 }

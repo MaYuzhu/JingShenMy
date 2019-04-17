@@ -9,24 +9,20 @@
 	<link rel="stylesheet" href="./css/index.css">
 	<link rel="stylesheet" href="./css/bootstrap.css"/>
 
+
 	<link href="css/mobiscroll.css" rel="stylesheet" />
 	<link href="css/mobiscroll_date.css" rel="stylesheet" />
-	<title>title</title>
+	<title>监测</title>
 </head>
 <body>
 	<div class="body">
 		<div class="header">
 			<img class="jiantou" src="./images/jiantou.png" alt="">
 			<img src="./images/980.png" alt="">
-			<span>京沈铁路边坡安全监测</span>
+			<span></span>
 		</div>
-		<div class="container">
-			<div class="index_header1">
-				<p>设备布点图</p>
-				<div class="p1">
-					<img src="./images/cheng.png" alt="" class="img-responsive center-block">
-				</div>
-			</div>
+		<div class="container1">
+			<div class="top_bg"></div>
 			<div class="chart_1 index" id="chart_1">
 				<p>位移实时数据</p>
 				<div id="main_1"></div>
@@ -35,13 +31,19 @@
 				<p>土壤含水率实时数据</p>
 				<div id="main_2"></div>
 			</div>
+			<div class="index_header1">
+				<p>设备布点图</p>
+				<div class="p1">
+					<img src="./images/cheng.png" alt="" class="img-responsive center-block">
+				</div>
+			</div>
 			<div class="history" id="history">
 				<div class="history_header">
 					<p class="jk">选择设备</p>
 					<div class="dropdown">
 						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 							T1
-							<span class="caret"></span>
+							<!--<span class="caret"></span>-->
 						</button>
 						<ul id="select1" class="dropdown-menu che" aria-labelledby="dropdownMenu1">
 							<li><a href="javascript:;">T1</a></li>
@@ -85,7 +87,7 @@
 							</tr>
 							</thead>
 							<tbody>
-								<tr>
+								<!--<tr>
 									<td>3</td>
 									<td>48.9</td>
 									<td class="goal_n2">2019-3-14 20</td>
@@ -94,37 +96,7 @@
 									<td>4 </td>
 									<td>23.4</td>
 									<td class="goal_n2">2019-3-14 20</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>48.9</td>
-									<td class="goal_n2">2019-3-14 20</td>
-								</tr>
-								<tr>
-									<td>4 </td>
-									<td>23.4</td>
-									<td class="goal_n2">2019-3-14 20</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>48.9</td>
-									<td class="goal_n2">2019-3-14 20</td>
-								</tr>
-								<tr>
-									<td>4 </td>
-									<td>23.4</td>
-									<td class="goal_n2">2019-3-14 20</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>48.9</td>
-									<td class="goal_n2">2019-3-14 20</td>
-								</tr>
-								<tr>
-									<td>4 </td>
-									<td>23.4</td>
-									<td class="goal_n2">2019-3-14 20</td>
-								</tr>
+								</tr>-->
 							</tbody>
 						</table>
 					</div>
@@ -134,10 +106,12 @@
 						 class="input" placeholder="请填写你的出生日期" />-->
 		</div>
 	</div>
-
+	<div class="zhe">
+		<div class="tip"></div>
+	</div>
 	<script src="./js/browser.js"></script> <!--不同浏览器兼容es6-->
 	<script src="./js/jquery.min.js"></script>
-	<script src="./js/mobiscroll_date.js" charset="gb2312"></script>
+	<script src="./js/mobiscroll_date.js" charset="gb2312"></script> <!--日期选择器-->
 	<script src="./js/mobiscroll.js"></script>
 	<script src="./js/jquery.cookie.js"></script>
 	<script src="./js/echarts.js"></script>
