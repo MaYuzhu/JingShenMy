@@ -11,16 +11,22 @@ var projectCode = $.getUrlParam('project');
 var url
 
 //京沈--'1308F0001&'   京张--'1101F001'
-var buildcode
+var buildcode,devcodeWeiyi,devcodeShidu
 if(projectCode == 1){
     $('.header span').text('京张铁路边坡安全监测')
     //url = 'http://36.110.66.214:50001'
     url = 'http://192.168.20.16:8380'
     buildcode = '1101F001'
+    devcodeWeiyi = '1101F00100010O08'
+    devcodeShidu = '1101F00100010K03'
+	$('.chart_2 div>:nth-child(2)').addClass('height_zhang')
 }else if(projectCode == 2){
     $('.header span').text('京沈铁路边坡安全监测')
     url = 'http://36.110.66.218:8091'
     buildcode = '1308F0001'
+    devcodeWeiyi = '1308F00010010O09'
+    devcodeShidu = '1308F00010010K01'
+    $('.chart_2 div>:nth-child(2)').addClass('height_shen')
 }else if(projectCode == 3){
     $('.header span').text('冬奥会边坡安全监测')
 
@@ -318,11 +324,13 @@ $.ajax({
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
 		//请求成功时执行该函数内容，result即为服务器返回的json对象
+		var devName = [];  //T1 T2 L1...
+
 		var shiftChartData = [];
 		var waterChartData = [];
 		var chartTime = [];
 		if (result) {
-			console.info(result);
+			console.log(result);
 
 			for (var i = 0; i < result.length; i++) {
 				var deviceData = result[i].data;
@@ -342,7 +350,9 @@ $.ajax({
 					if (result[i].type == 'O') {
 						shiftChartDeviceData.push(pointData.l);
 					}
+
 				}
+                devName.push({name:result[i].devname,dev:result[i].devcode})
 				shiftChartData.push({
 					name: result[i].devname,
 					type: 'line',
@@ -354,7 +364,6 @@ $.ajax({
 					data: waterChartDeviceData
 				});
 			}
-
 			shiftChart.setOption({
 				xAxis: {
 					data: chartTime
@@ -368,11 +377,17 @@ $.ajax({
 				},
 				series: waterChartData
 			});
+			/*选择设备的ul*/
+			$('#select1').empty()
+            $('#dropdownMenu1').attr('value',devName[0].dev)
+			for(var q=0;q<devName.length;q++){
+                $('#select1').append(`<li><a class=${devName[q].dev} href="javascript:;">${devName[q].name}</a></li>`)
+			}
 		}
 	},
 	error: function (errorMsg) {
 		//请求失败时执行该函数
-        popupAlert('请登录...')
+        popupAlert('网络错误...')
 	}
 });
 
@@ -381,10 +396,11 @@ $.ajax({
 	type: "post",
 	async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
 	url: url + "/zzcismp/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
-	data: {devcode:'1308F00010010O09'},
+	data: {devcode:devcodeWeiyi},
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
 		//请求成功时执行该函数内容，result即为服务器返回的json对象
+		console.log(result)
 		if (result) {
 			L_para_a = result.para_b
 			shiftChart.setOption({
@@ -413,9 +429,10 @@ $.ajax({
 	type: "post",
 	async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
 	url: url + "/zzcismp/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
-	data: {devcode:'1308F00010010K01'},
+	data: {devcode:devcodeShidu},
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
+		//console.log(result)
 		T_para_a = result.para_b
 		if (result) {
 			waterChart.setOption({
@@ -509,16 +526,17 @@ $('.button_01').on('click',function () {
 		return
 	}
 
-	var type_text = $('#dropdownMenu1').text().trim()
-	var devcode = getDevcode(type_text)
+	//var type_text = $('#dropdownMenu1').text().trim()  //取到显示的值L1等
+    var devcode = $('#dropdownMenu1').attr('value')
+	//var devcode = getDevcode(type_text)
 	var start_time = $('#end_time').val() + ' 00:00:00'
 	var end_time = $('#end_time').val() + ' 23:59:59'
 
-	if(devcode.substr(13,1) == 'K'){
+	/*if(devcode.substr(13,1) == 'K'){
 
 	}else {
 
-	}
+	}*/
 
 	$.ajax({
 		type: "post",
@@ -535,7 +553,7 @@ $('.button_01').on('click',function () {
 		dataType: "json",
 		success: function (result) {
 			$('.weilan_table tbody').html('')
-			//console.log(result)
+			console.log(result)
 			if (result) {
 				for(var i=0;i<result.data.length;i++){
 					$('.weilan_table tbody').append(`<tr>

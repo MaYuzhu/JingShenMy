@@ -68,7 +68,7 @@ html,body{
   background: #fff;
   margin: 10px auto;
 }
-.index div{
+.index>div{
   width: 96%;
   height: 300px;
   /*style="width: 320px;height:280px;"*/
@@ -80,9 +80,15 @@ html,body{
 }
 .chart_2 div>:nth-child(2){
   width: 37%;
-  height: 72%;
+  /*height: 72%;*/
   margin-right: 2%;
   display: none;
+}
+.height_zhang{
+  height: 32%;
+}
+.height_shen{
+  height: 72%;
 }
 @media screen and (min-width:900px){
   .chart_1 div>:nth-child(2){
