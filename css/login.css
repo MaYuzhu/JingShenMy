@@ -40,6 +40,7 @@ html,body,.container{
   }*/
   .login_box{
     width:360px;
+    top:40%;
   }
   .background{
     background-size:100% 100%;
