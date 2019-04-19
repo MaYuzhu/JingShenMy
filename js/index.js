@@ -14,8 +14,8 @@ var url
 var buildcode,devcodeWeiyi,devcodeShidu
 if(projectCode == 1){
     $('.header span').text('京张铁路边坡安全监测')
-    //url = 'http://36.110.66.214:50001'
-    url = 'http://192.168.20.16:8380'
+    url = 'http://36.110.66.204:50002'
+    //url = 'http://192.168.20.16:8380'
     buildcode = '1101F001'
     devcodeWeiyi = '1101F00100010O08'
     devcodeShidu = '1101F00100010K03'
