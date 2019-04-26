@@ -98,7 +98,7 @@ html,body{
   }
   .chart_2 div>:nth-child(2){
     width: 140px;
-    height: 72%;
+    /*height: 72%;*/
     margin-right: 2%;
     display: none;
   }

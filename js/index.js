@@ -19,14 +19,16 @@ if(projectCode == 1){
     buildcode = '1101F001'
     devcodeWeiyi = '1101F00100010O08'
     devcodeShidu = '1101F00100010K03'
-	$('.chart_2 div>:nth-child(2)').addClass('height_zhang')
+	$('.chart_2 div>:nth-child(2)').removeClass().addClass('height_zhang')
+    $('#zhutu img').attr('src','./images/jingzhang.png')
 }else if(projectCode == 2){
     $('.header span').text('京沈铁路边坡安全监测')
     url = 'http://36.110.66.218:8091'
     buildcode = '1308F0001'
     devcodeWeiyi = '1308F00010010O09'
     devcodeShidu = '1308F00010010K01'
-    $('.chart_2 div>:nth-child(2)').addClass('height_shen')
+    $('.chart_2 div>:nth-child(2)').removeClass().addClass('height_shen')
+	$('#zhutu img').attr('src','./images/jingshen.png')
 }else if(projectCode == 3){
     $('.header span').text('冬奥会边坡安全监测')
 
@@ -36,8 +38,8 @@ if(projectCode == 1){
 $('.jiantou').on('click',function () {
     location.href="loginBefore.html";
 })
-//判断登录
-if($.cookie('password') == null){
+//判断登录   !$.cookie('password') &&
+if(!projectCode){
     popupAlert('请登录...')
     location.href="loginBefore.html";
 }
@@ -168,7 +170,8 @@ shiftChart.setOption({
 			fontWeight: 'bolder',
 			fontSize: 12
 		},
-		max: 100,
+		max: 20,
+		min: -20,
 		axisLabel: {
 			color: '#333333',
 			fontSize: 14
@@ -330,7 +333,7 @@ $.ajax({
 		var waterChartData = [];
 		var chartTime = [];
 		if (result) {
-			console.log(result);
+			//console.log(result);
 
 			for (var i = 0; i < result.length; i++) {
 				var deviceData = result[i].data;
@@ -400,7 +403,7 @@ $.ajax({
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
 		//请求成功时执行该函数内容，result即为服务器返回的json对象
-		console.log(result)
+		//console.log(result)
 		if (result) {
 			L_para_a = result.para_b
 			shiftChart.setOption({
@@ -421,7 +424,7 @@ $.ajax({
 	},
 	error: function (errorMsg) {
 		//请求失败时执行该函数
-        popupAlert('请登录...')
+        popupAlert('网络错误...')
 	}
 });
 //含水率设备阈值
@@ -453,7 +456,7 @@ $.ajax({
 	},
 	error: function (errorMsg) {
 		//请求失败时执行该函数
-        popupAlert('请登录...')
+        popupAlert('网络错误...')
 	}
 });
 //最下边表格
