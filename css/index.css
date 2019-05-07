@@ -75,7 +75,7 @@ html,body{
 }
 .chart_1 div>:nth-child(2){
   width: 37%;
-  height: 30%;
+  /*height: 30%;*/
   margin-right: 2%;
 }
 .chart_2 div>:nth-child(2){
