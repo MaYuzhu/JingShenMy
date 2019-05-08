@@ -14,8 +14,8 @@ var url
 var buildcode,devcodeWeiyi,devcodeShidu
 if(projectCode == 1){
     $('.header span').text('京张铁路边坡安全监测')
-    url = 'http://36.110.66.204:50002'
-    //url = 'http://192.168.20.16:8380'
+    //url = 'http://36.110.66.204:50002'
+    url = 'https://slope.anew-eco.com/jingzhang'
     buildcode = '1101F001'
     devcodeWeiyi = '1101F00100010O08'
     devcodeShidu = '1101F00100010K03'
@@ -23,7 +23,7 @@ if(projectCode == 1){
     $('#zhutu img').attr('src','./images/jingzhang.png')
 }else if(projectCode == 2){
     $('.header span').text('京沈铁路边坡安全监测')
-    url = 'http://36.110.66.218:8091'
+    url = 'https://slope.anew-eco.com/jingshen'
     buildcode = '1308F0001'
     devcodeWeiyi = '1308F00010010O09'
     devcodeShidu = '1308F00010010K01'
@@ -315,9 +315,9 @@ waterChart.setOption({
 
 $.ajax({
 	type: "post",
-	async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+	async: true,
 	//url: url + "/zzcismp/tsd/getBuildDevsData.shtml?starttime=" + startTime + "&endtime=" + endtime + "&timetype=hour",    //请求发送到TestServlet处
-    url: url + "/zzcismp/tsd/getBuildDevsData.shtml",
+    url: url + "/tsd/getBuildDevsData.shtml",
     data: {
 	    'timetype':'hour',
 	    'starttime':startTime,
@@ -398,7 +398,7 @@ $.ajax({
 $.ajax({
 	type: "post",
 	async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-	url: url + "/zzcismp/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
+	url: url + "/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
 	data: {devcode:devcodeWeiyi},
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
@@ -431,7 +431,7 @@ $.ajax({
 $.ajax({
 	type: "post",
 	async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-	url: url + "/zzcismp/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
+	url: url + "/alarm/getAlarmValueByDevcode.shtml",    //请求发送到TestServlet处
 	data: {devcode:devcodeShidu},
 	dataType: "json",        //返回数据形式为json
 	success: function (result) {
@@ -545,7 +545,7 @@ $('.button_01').on('click',function () {
 		type: "post",
 		async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
 		//url: "http://36.110.66.218:8091/zzcismp/tsd/getDevData.shtml?devcode=1308F00010010O10&starttime=2018-09-01%2000:00:00&endtime=2018-10-01%2000:00:00&timetype=hour",
-		url: url + '/zzcismp/tsd/getDevData.shtml',
+		url: url + '/tsd/getDevData.shtml',
 		data: {
 			//devcode:'1308F00010010O10',
 			devcode:devcode,

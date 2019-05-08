@@ -43,9 +43,10 @@
 <script src="js/jquery.cookie.js"></script>
 <script>
 	var urlArr = [
-        'http://36.110.66.204:50002',
-        //url = 'http://192.168.20.16:8380',
-        'http://36.110.66.218:8091'
+        //'http://36.110.66.204:50002',
+        //'http://36.110.66.218:8091'
+		'https://slope.anew-eco.com/jingzhang',
+        'https://slope.anew-eco.com/jingshen'
 	]
 	var dev ,url
     (function ($) {
@@ -132,7 +133,7 @@
 
 				async: false,
 				cache:true,
-				url: url + '/zzcismp/user/login.shtml',
+				url: url + '/user/login.shtml',
 				data:{username:data.username,password:data.password},
 				dataType: 'json',
 				jsonp: "callback",
@@ -157,7 +158,7 @@
 					}
 				},
 				error: function(){
-					 alert('fail');
+					 alert('网络请求失败...');
 				}
 			});
 
