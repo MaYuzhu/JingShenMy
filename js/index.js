@@ -415,11 +415,15 @@ $.ajax({
 						data : [
 							{
 								yAxis: L_para_a,
-							}
+							},
+                            {
+                                yAxis: -L_para_a,
+                            }
 						]
 					}
 				}
 			})
+
 		}
 	},
 	error: function (errorMsg) {
