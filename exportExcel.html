@@ -51,6 +51,13 @@
         .table>tbody>tr:nth-child(odd){
             background: #e8e8e8;
         }
+        .loading{
+            display: none;
+        }
+        .loading img{
+            display: block;
+            margin: 0 auto ;
+        }
     </style>
 </head>
 <body>
@@ -87,11 +94,11 @@
                     <p class="chaxun">查询</p>
                     <p class="daochu" onclick='tableToExcel()' style="display:none">导出Excel</p>
                 </div>
+                <div class="loading"><img src="./images/time1.gif" alt=""></div>
                 <table class="table">
                     <thead></thead>
                     <tbody></tbody>
                 </table>
-
             </div>
         </div>
 
@@ -150,10 +157,12 @@
 
     $('.chaxun').on('click',function () {
         $(".daochu").hide()
+        $(".loading").show()
+
         $('.table thead').empty()
         $('.table tbody').empty()
         table = []
-        table_th = '时间/设备,'
+        table_th = '日期,时间,'
         starttime = $('#start_time').val()
         endtime = $('#end_time').val()
         index = $('#a').val()
@@ -182,20 +191,22 @@
                 },
                 dataType: "json",
                 success: function (result) {
-                    //console.log(result instanceof Array)
-                    if(!result){
+                    console.log(result)
+                    if(result.length == 0){
+                        alert("该时间段没有数据")
+                        $(".loading").hide()
                         return
                     }
                     if(result instanceof Array){
-                        $('.table thead').empty().append('<th>时间/设备</th>')
+                        $('.table thead').empty().append('<th>日期</th><th>时间</th>')
 
                         for(let i=0;i<result.length;i++){
                             $('.table>:nth-child(1)').append('<th>'+ result[i].devname +'</th>')
                             table_th += result[i].devname + ','
                         }
                         for(let j=0;j<result[0].data.length;j++){
-                            $('.table>tbody').append('<tr><td>'+ result[0].data[j].time +'</td></tr>')
-                            table.push({time:result[0].data[j].time})
+                            $('.table>tbody').append(`<tr><td>${result[0].data[j].time.substring(0,10)}</td><td>${result[0].data[j].timeInterval}</td></tr>`)
+                            table.push({time:result[0].data[j].time.substring(0,10),timeInterval:result[0].data[j].timeInterval})
                         }
                         for(let i=0;i<result.length;i++){
 
@@ -205,22 +216,24 @@
                             }
                         }
                         $(".daochu").show()
+                        $(".loading").hide()
                         //console.log(table)
                     }else {
-                        $('.table thead').empty().append(`<th>时间/设备</th><th>${result.devname}</th>`)
+                        $('.table thead').empty().append(`<th>日期</th><th>时间</th><th>${result.devname}</th>`)
                         //console.log(result)
                         table_th += result.devname + ','
                         for(let i=0;i<result.data.length;i++){
-                            $('.table tbody').append(`<tr><td>${result.data[i].time}</td><td>${(result.data[i].data.rh)?result.data[i].data.rh+'%':result.data[i].data.l+'mm'}</td></tr>`)
-                            table.push({time:result.data[i].time,data:(result.data[i].data.rh)?result.data[i].data.rh+'%':result.data[i].data.l+'mm'})
+                            $('.table tbody').append(`<tr><td>${result.data[i].time.substring(0,10)}</td><td>${result.data[i].timeInterval}</td><td>${(result.data[i].data.rh)?result.data[i].data.rh+'%':result.data[i].data.l+'mm'}</td></tr>`)
+                            table.push({time:result.data[i].time.substring(0,10),timeInterval:result.data[i].timeInterval,data:(result.data[i].data.rh)?result.data[i].data.rh+'%':result.data[i].data.l+'mm'})
                         }
                         $(".daochu").show()
-
+                        $(".loading").hide()
                     }
 
                 },
                 error: function (errorMsg) {
                     console.log('网络错误...')
+                    alert('服务器错误500')
                 }
             });
         }
